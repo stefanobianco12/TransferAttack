@@ -26,7 +26,9 @@ class Attack(object):
         if norm not in ['l2', 'linfty']:
             raise Exception("Unsupported norm {}".format(norm))
         self.attack = attack
-        self.model = self.load_model(model_name)
+        print(epsilon)
+        #self.model = self.load_model(model_name)
+        self.model = model_name
         self.epsilon = epsilon
         self.targeted = targeted
         self.random_start = random_start
@@ -81,7 +83,6 @@ class Attack(object):
 
         # Initialize adversarial perturbation
         delta = self.init_delta(data)
-
         momentum = 0
         for _ in range(self.epoch):
             # Obtain the output
@@ -99,7 +100,7 @@ class Attack(object):
             # Update adversarial perturbation
             delta = self.update_delta(delta, data, momentum, self.alpha)
 
-        return delta.detach()
+        return delta.detach()+data
 
     def get_logits(self, x, **kwargs):
         """
