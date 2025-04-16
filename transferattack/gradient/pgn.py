@@ -105,4 +105,4 @@ class PGN(Attack):
             # Update adversarial perturbation
             delta = self.update_delta(delta, data, momentum, self.alpha)
 
-        return delta.detach()
+        return delta.detach()+data
